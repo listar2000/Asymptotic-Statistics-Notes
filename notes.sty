@@ -1,0 +1,60 @@
+
+\colorlet{LightGray}{White!90!Periwinkle}
+\colorlet{LightOrange}{Orange!15}
+\colorlet{LightGreen}{Green!15}
+\colorlet{LightRed}{red!15}
+\colorlet{LightPurple}{Purple!15}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+
+\declaretheoremstyle[name=Theorem,]{thmsty}
+\declaretheorem[style=thmsty,numberwithin=section]{theorem}
+\tcolorboxenvironment{theorem}{colback=LightGray}
+
+\declaretheoremstyle[name=Note,]{prosty}
+\declaretheorem[style=prosty,numberlike=theorem]{note}
+\tcolorboxenvironment{note}{colback=LightOrange}
+
+\declaretheoremstyle[name=Lemma,]{lemsty}
+\declaretheorem[style=lemsty,numberlike=theorem]{lemma}
+\tcolorboxenvironment{lemma}{colback=LightGreen}
+
+\declaretheoremstyle[name=Definition,]{defsty}
+\declaretheorem[style=defsty,numberlike=theorem]{definition}
+\tcolorboxenvironment{definition}{colback=LightRed}
+
+\declaretheoremstyle[name=Example,]{expsty}
+\declaretheorem[style=expsty,numberlike=theorem]{example}
+\tcolorboxenvironment{example}{colback=LightPurple}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\EE}[1]{\mathbb{E}\left[ #1 \right]}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\setstretch{1.2}
+\geometry{
+    textheight=9in,
+    textwidth=5.7in,
+    top=1in,
+    headheight=12pt,
+    headsep=25pt,
+    footskip=30pt
+}
+
+\definecolor{hrefblue}{rgb}{0.0, 0.0, 0.8}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=hrefblue,    % color of external links (URLs)
+    linkcolor=black,      % color of internal links (sections, pages)
+    citecolor=black,      % color of citation links (bibliography)
+    filecolor=black,      % color of file links
+    pdftitle={Your title here},
+    pdfpagemode=FullScreen,
+}
+
+\numberwithin{equation}{section}

@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage{thmtools}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{geometry}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{bbold}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{framed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{notes}  % Include the custom style file
+% ------------------------------------------------------------------------------
+
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% Cover Page and ToC
+% ------------------------------------------------------------------------------
+
+\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{1.5pt} \\
+		\LARGE \textbf{\textit{Asymptotic Statistics} \\ \Large{by VAN DER VAART}
+		\HRule{2.0pt} \\ \vspace*{10\baselineskip}}
+		}
+\date{5/24/2024 - ?}
+\author{Scribed by:
+\textbf{Sida Li}}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Prelim: Probability and Measure}
+\begin{note}
+    This part follows Chapter 1 in Keener's \textit{Theoretical Statistics} textbook. It is meant to introduce some basic concepts that will be assumed throughout rest of the note. I also bring out necessary notations from here. \textbf{Precise definitions are usually ommitted, but can be found in the textbook.}
+\end{note}
+
+\subsection{Measure and Probability Space}
+
+We start by refreshing the rigorous definition of \textbf{measure space}, then proceed with examples.
+
+Given a set $\mathcal{X}$, a $\sigma$-\textbf{algebra} $\mathcal{A}$ is a collection of subsets of $\mathcal{X}$ that (1) contains $\mathcal{X}$ and the empty set $\emptyset$, (2) is closed under complements, and (3) is closed under countable unions. 
+
+A \textbf{measure} $\mu:\mathcal{A} \rightarrow [0, \infty]$ is a function that assigns a non-negative real number to each element in $\mathcal{A}$, such that $\mu(\emptyset) = 0$ and $\mu$ is countably additive, i.e. for any disjoint sequence of sets $\{A_i\}_{i=1}^{\infty}$, 
+\begin{equation}
+    \mu\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} \mu(A_i)
+\end{equation}
+The triple $(\mathcal{X}, \mathcal{A}, \mu)$ is called a \textbf{measure space}. A measure $\nu$ such that $\nu(\mathcal{X}) = 1$ is called a \textbf{probability measure}, and then we can define a \textbf{probability space} $(\mathcal{X}, \mathcal{A}, \nu)$.
+
+\subsection{Lebesgue Measure and Why We Care}
+
+Many statistics textbook, including Keener's, assures the readers that ``measure theory is not needed'' -- the motivation behind this simplification is that most of the time, we are working with the \textbf{Lebesgue measure} on $\mathbb{R}^d$. Lebesgue measure is compatible with the usual notion of length, area, and volume (in 1, 2, and 3-dimensions), and is defined on the \textbf{Borel $\sigma$-algebra} $\mathcal{B}(\mathbb{R}^d)$, which is the smallest $\sigma$-algebra containing all open sets in $\mathbb{R}^d$. 
+
+Another benefits of Lebesgue measure is its connection with our usual notion of integration. If a function $f$ is \textbf{Lebesgue integrable} (whose definition is detailed \href{https://math.stackexchange.com/questions/1716526/what-does-it-mean-to-say-that-a-function-is-integrable-with-respect-to-a-measure}{here}), then its integral is:
+\begin{equation}
+    \int_{\mathbb{R}^d} f(x)\, d\mu(x) = \int_{\mathbb{R}^d} f(x)\, dx
+\end{equation}
+where the RHS is the familiar Riemann integral. Throughout this notes, we consider all measures $\nu$ on $\mathbb{R}^d$\footnote{we also assume $\nu$ to be $\sigma$-finite, whose definition is skipped} to be \textbf{absolutely continuous} with respect to the Lebesgue measure $\mu$, i.e. $\nu(A) = 0$ implies $\mu(A) = 0$. Then by \textbf{Radon–Nikodym's theorem}, we can write
+\begin{equation}
+    \int_{\mathbb{R}^d} f(x)\, d\nu(x) = \int_{\mathbb{R}^d} f(x) \frac{d\nu}{d\mu}(x)\, d\mu(x) = \int_{\mathbb{R}^d} f(x)\nu(x) \,dx
+\end{equation}
+for $\nu$-integrable functions $f$. Hopefully this clarifies why we can safely ignore measure theory in most of the (basic) statistics literature.
+
+
+\newpage
+\section{Convergence of Random Variables}
+
+
+\begin{note}
+	This part is largely following Chapter 2 of the book, with focus on the first three subsections.
+\end{note}
+% ------------------------------------------------------------------------------
+
+
+% ------------------------------------------------------------------------------
+% Reference and Cited Works
+% ------------------------------------------------------------------------------
+
+% \bibliographystyle{apalike}
+% \bibliography{References.bib}
+
+% ------------------------------------------------------------------------------
+
+\end{document}

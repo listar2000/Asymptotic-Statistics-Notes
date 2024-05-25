@@ -1,0 +1,26 @@
+# LaTeX project .gitignore
+
+# Ignore compiled output files
+*.aux
+*.log
+*.out
+*.toc
+
+# Ignore PDF output files
+*.pdf
+
+# Ignore temporary files
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Ignore editor-specific files
+*.vscode
+*.sublime-project
+*.sublime-workspace
+
+# Ignore backup files
+*~
+
+# Ignore the out folder
+/out/
