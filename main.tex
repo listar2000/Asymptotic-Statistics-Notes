@@ -22,7 +22,6 @@
 % ------------------------------------------------------------------------------
 % Cover Page and ToC
 % ------------------------------------------------------------------------------
-
 \title{ \normalsize \textsc{}
 		\\ [2.0cm]
 		\HRule{1.5pt} \\
@@ -74,14 +73,100 @@ for $\nu$-integrable functions $f$. Hopefully this clarifies why we can safely i
 \newpage
 \section{Convergence of Random Variables}
 
-
 \begin{note}
-	This part is largely following Chapter 2 of the book, with focus on the first three subsections.
+	This part is largely following the main definitions and proofs in Chapter 2 of van der Vaart's book.
 \end{note}
 % ------------------------------------------------------------------------------
 
+\subsection{Modes of Convergence}
 
-% ------------------------------------------------------------------------------
+We start by defining the different modes of convergence for random variables. Let $\{X_n\}_{n=1}^{\infty}$ be a sequence of random variables, and $X$ be another random variable. 
+
+\begin{itemize}
+    \item We say that $X_n$ \textbf{converges in distribution} to $X$ if
+    \begin{equation}
+        \lim_{n \rightarrow \infty} P(X_n \leq x) = P(X \leq x)
+    \end{equation}
+    for any $x$ such that the mapping $x \to P(X \leq x)$ is continuous. We denote this convergence as $X_n \xrightarrow{d} X$.
+    
+    \item We say $X_n$ \textbf{converges in probability} to $X$ if for any $\epsilon > 0$, 
+    \begin{equation}
+        \lim_{n \rightarrow \infty} P(d(X_n, X) > \epsilon) = 0
+    \end{equation}
+    where $d(\cdot, \cdot)$ is a distance metric between like Euclidean distance. We denote this convergence as $X_n \xrightarrow{P} X$.
+
+    \item We say $X_n$ \textbf{converges almost surely} to $X$ if 
+    \begin{equation}
+        P\left(\lim_{n \rightarrow \infty} d(X_n, X) = 0  \right) = 1
+    \end{equation}
+    we also denote this convergence as $X_n \xrightarrow{a.s.} X$. This is considered as a stronger form of convergence than the two modes above.
+\end{itemize}
+
+\begin{lemma}
+\label{lemma:portmanteau}
+\textbf{(Portmanteau)} For any sequence of random variables $X_n$ and $X$ the following statements are equivalent.
+\begin{itemize}
+    \item[(i)] $P(X_n \leq x) \to P(X \leq x)$ for all continuity points of $x \mapsto P(X \leq x)$;
+    \item[(ii)] $\E f(X_n) \to \E f(X)$ for all bounded, continuous functions $f$;
+    \item[(iii)] $\E f(X_n) \to \E f(X)$ for all bounded, Lipschitz functions $f$;
+    \item[(iv)] $\liminf \E f(X_n) \geq \E f(X)$ for all nonnegative, continuous functions $f$;
+    \item[(v)] $\liminf P(X_n \in G) \geq P(X \in G)$ for every open set $G$;
+    \item[(vi)] $\limsup P(X_n \in F) \leq P(X \in F)$ for every closed set $F$;
+    \item[(vii)] $P(X_n \in B) \to P(X \in B)$ for all Borel sets $B$ with $P(X \in \delta B) = 0$, where $\delta B = \overline{B} - \overset{\circ}{B}$ is the boundary of $B$.
+\end{itemize}
+\end{lemma}
+
+The textbook has proven all the equivalence except for $(ii) \Leftrightarrow (iv)$, which we give the proof below together with other proof supplements.
+
+\begin{proof}[Proof supplements of Lemma 1]
+    We first supplement $(i) \Rightarrow (ii)$ by proving that a continuous function on a compact set is uniformly continuous. Let $f$ be a continuous function on a compact domain $K$. By contradiction, if $f$ is not uniformly continuous, let $\epsilon > 0$, then for every $n \in \mathbb{N}$, there exists $x_n, y_n \in K$ such that $|x_n - y_n| < 1/n$ but $|f(x_n) - f(y_n)| \geq \epsilon$. Since $K$ is compact, we can extract a convergent subsequence $x_{n_k} \to x$ and $y_{n_k} \to y$. Then by continuity of $f$, we have $f(x) = \lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} f(y_n) = f(y)$, which contradicts the assumption that $|f(x) - f(y)| \geq \epsilon$.
+
+    Next we clarify $(iii) \Rightarrow (v)$ by explaining the Lipschitz approximation to the indicator function on open set $G$. Consider the sequence of Lipschitz functions $f_m$ defined as
+    \begin{equation}
+        f_m(x) = \begin{cases}
+            1 & \text{if } d(x, G^c) \geq 1/m \\
+            m \cdot d(x, G^c) & \text{if } d(x, G^c) < 1/m
+        \end{cases}
+    \end{equation}
+    then $f_m$ is apparently Lipschitz with Lipschitz constant $m$. Since $f_m \uparrow \mathbf{1}_G$ pointwise, by $(iii)$ we have for every $m$
+    \begin{equation}
+        \liminf_{n\to\infty} P(X_n \in G) \geq \liminf _{n\to\infty}\E f_m(X_n) = \E f_m(X)
+    \end{equation}
+    and the RHS $\to P(X \in G)$ as $m \to \infty$.
+
+    Finally, we prove $(ii) \Leftrightarrow (iv)$. Starting from the assumption $(ii)$. Let $f_m$ be a sequence of bounded, continuous functions such that $f_m \uparrow f$. We can expcliditly write $f_m$ as $f_m = \min(f, m)$. For each fixed $m$, we have
+    \begin{equation}
+        \liminf_{n\to\infty} \E f(X_n) \geq \liminf_{n\to\infty} \E f_m(X_n) = \E f_m(X)
+    \end{equation}
+    where the last equality is by $(ii)$. As $m \to \infty$, the RHS increases to $\E f(X)$ by the monotone convergence theorem. 
+    
+    For the reverse direction, let $m$ and $M$ be the lower and upper bounds of $f$, and define functions $g = f + m$ and $h = M - f$. Apparently both $g$ and $h$ are nonnegative, continuous functions. Then we have
+    \begin{equation}
+        \liminf_{n\to\infty} \E g(X_n) \geq \E g(X) \quad \text{and} \quad \liminf_{n\to\infty} \E h(X_n) \geq \E h(X)
+    \end{equation}
+    From the first inequality, we have $\liminf_{n\to\infty} \E f(X_n) \geq \E f(X)$. Similarly, from the second inequality, we have $\limsup_{n\to\infty} \E f(X_n) \leq \E f(X)$. Combining the two inequalities, we have $\liminf_{n\to\infty} \E f(X_n) = \E f(X)$.
+\end{proof}
+
+The next theorem is about how continuous mapping preserves all three modes of convergence mentioned above.
+
+\begin{theorem}
+    \label{thm:cont_map_thm}
+    \textbf{(Continuous Mapping Theorem).} Let $g: \mathbb{R}^d \to \mathbb{R}^k$ be continuous at every point of a set \( C \) such that \( P(X \in C) = 1 \)
+    \begin{enumerate}
+    \item[(i)] If $X_n \xrightarrow{d} X$, then $g(X_n) \xrightarrow{d} g(X)$.
+    \item[(ii)] If $X_n \xrightarrow{P} X$, then $g(X_n) \xrightarrow{P} g(X)$.
+    \item[(iii)] If $X_n \xrightarrow{a.s.} X$, then $g(X_n) \xrightarrow{a.s.} g(X)$.
+    \end{enumerate}   
+\end{theorem}
+
+\begin{proof}[Proof supplment of Theorem \ref*{thm:cont_map_thm}]
+    For $(i)$, the easier way than the textbook is to realize that the preimage of a closed set under a continuous function is closed. Then we can utlize $(vi)$ in Lemma \ref{lemma:portmanteau} to prove $P(g(X_n) \in F) \to P(g(X) \in F)$ for every closed $F$.
+
+    The $(iii)$ is trivial to prove: if the event $\lim_{n\to\infty}d(X_n, X) = 0$ is true, by continuity of $g$ we have $\lim_{n\to\infty}d(g(X_n), g(X)) = 0$ as well. Therefore:
+    \begin{equation}
+        P\left(\lim_{n\to\infty}d(g(X_n), g(X)) = 0\right) \geq P\left(\lim_{n\to\infty}d(X_n, X) = 0\right) = 1
+    \end{equation}
+\end{proof}
 % Reference and Cited Works
 % ------------------------------------------------------------------------------
 
