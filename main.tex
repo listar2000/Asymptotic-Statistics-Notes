@@ -7,7 +7,7 @@
 \usepackage{geometry}
 \usepackage{float}
 \usepackage{hyperref}
-\usepackage{bbold}
+% \usepackage{bbold}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{framed}
@@ -174,5 +174,52 @@ The next theorem is about how continuous mapping preserves all three modes of co
 % \bibliography{References.bib}
 
 % ------------------------------------------------------------------------------
+For a sequence of random variables $\left\{ X_n \right\}$, the concept of \textbf{uniformly tightness} (also known as \textbf{bounded in probability}) states that for every $\epsilon > 0$, there exists a constant $M$ such that 
+\begin{equation}
+    \sup_{n} P(|X_n| > M) < \epsilon
+\end{equation}
+\textbf{Prohorov's theorem} then states the equivalence between uniformly tightness and convergence in distribution.
+\begin{theorem}
+    Let $\left\{ X_n \right\}$ be a sequence of random variables in $\mathbb{R}^k$.
+    \begin{itemize}
+        \item[(i)] If $X_n \xrightarrow{d} X$ for some $X$, then $\{X_n : n \in \mathbb{N}\}$ is uniformly tight;
+        \item[(ii)] If $X_n$ is uniformly tight, then there exists a subsequence with $X_{n_j} \xrightarrow{d} X$ as $j \to \infty$, for some $X$.
+    \end{itemize}
+\end{theorem}
+\begin{proof}[Note on the proof for $(i)$]
+    There is a very trivial fact used in proving $(i)$, which we will elaborate here. We want to show that for any well-defined random variable $X$ and $\epsilon > 0$, there exists $M$ such that $P(|X| > M) < \epsilon$. This is equivalent to showing that $P(|X| \leq M) \geq 1 - \epsilon$. Since $P(|X| \leq M)$ is a monotonically increasing function of $M$, we can take $M$ to be the smallest value such that $P(|X| \leq M) \geq 1 - \epsilon$. We can also prove it using Markov's inequality on $|X|$.
+
+    For the proof on $(ii)$, it relies on the following \textbf{Helley's Lemma}.
+\end{proof}
+\begin{lemma}[\textbf{Helley's Lemma}]
+    Each given sequence $F_n$ of cumulative distribution functions on $\mathbb{R}^k$ possesses a subsequence $F_{n_j}$ with the property that $F_{n_j}(x) \to F(x)$ at each continuity point $x$ of a possibly \textbf{defective distribution function} $F$.
+    \vspace*{0.2em}
+
+    A \textbf{defective distribution function} is one that shares the same properties as a distribution function, except that its limits at infinities might be between 0 and 1.
+\end{lemma}
+\begin{proof}[Proof supplement] we skip over everything up to the diagonalization argument. Now we have a subsequence \( \left\{ F_{n_j} \right\}\) such that \(F_{n_j}(q_i) \to G(q_i)\) for each $q \in \mathbb{Q}$ (here for simplicity we deal with 1-dimensional case). We define 
+\begin{equation}
+    F(x) = \inf_{q > x} G(q)
+\end{equation}
+here we mainly supplement the ``monotonicity'' argument. If $x$ is a coninuity point of $F$, then we can always find rationals $q < x < q'$ such that $G(q) < F(x) < G(q')$ and $G(q') - G(q) < \epsilon$ for any $\epsilon > 0$. Now since $F_{n_j}(q) \to G(q)$ and same for $q'$, we have 
+\begin{equation}
+    G(q') = \liminf F_{n_j}(q') \geq \liminf F_{n_j}(x) \geq \liminf F_{n_j}(q) = G(q)
+\end{equation}
+which directly tells us that $\|\liminf F_{n_j}(x) - F(x)\| < \epsilon$. Similarly showing the $\limsup$ part gives us the desired result.
+\end{proof}
+\subsection{Connection Between Different Modes of Convergence}
+The following theorem gives the connection between different modes of convergence.
+\begin{theorem}
+    Let $X_n, X$ and $Y_n$ be random vectors. Then
+\begin{itemize}
+    \item[(i)] $X_n \xrightarrow{a.s.} X$ implies $X_n \xrightarrow{P} X$;
+    \item[(ii)] $X_n \xrightarrow{P} X$ implies $X_n \xrightarrow{d} X$;
+    \item[(iii)] $X_n \xrightarrow{P} c$ for a constant $c$ if and only if $X_n \xrightarrow{d} c$;
+    \item[(iv)] if $X_n \xrightarrow{d} X$ and $d(X_n, Y_n) \xrightarrow{P} 0$, then $Y_n \xrightarrow{d} X$;
+    \item[(v)] if $X_n \xrightarrow{d} X$ and $Y_n \xrightarrow{P} c$ for a constant $c$, then $(X_n, Y_n) \xrightarrow{d} (X, c)$;
+    \item[(vi)] if $X_n \xrightarrow{P} X$ and $Y_n \xrightarrow{P} Y$, then $(X_n, Y_n) \xrightarrow{P} (X, Y)$.
+\end{itemize}
+\end{theorem}
+A quick conclusion is that convergence in distribution is the weakest form of convergence, while almost sure convergence is the strongest.
 
 \end{document}
