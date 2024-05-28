@@ -248,4 +248,22 @@ The $(v)$ in Theorem $\ref{thm:connection}$ is especially useful in proving the 
     \end{enumerate}
 \end{lemma}
 In each of the cases above, we leverage points $(iii), (v)$ in $\ref{thm:connection}$ first, then define a continuous mapping $f(X_n, Y_n)$ to enable continuous mapping.
+
+Finally, if the distribution function of the limit $X$ is continuous, then convergence in distribution implies uniform convergence of $P(X_n < x) \to P(X < x)$ for every $x$.
+\begin{lemma}
+    Let $X_n$ and $X$ be random variables and $X$ has a continuous distribution function. If $X_n \xrightarrow{d} X$, then $P(X_n < x) \to P(X < x)$ uniformly in $x$.
+\end{lemma}
+\begin{proof}[Proof for $d = 2$]
+    Here we supplement a proof for the 2-dimensional case. Let $F$ and $F_n$ denotes the distribution function of $X$ and $X_n$ respectively. By continuity of $F$ we can find $k$ points $-\infty = a_1 < a_2 < \cdots < a_{k} = \infty$ on the first coordinate and another $k$ points $-\infty = b_1 < b_2 < \cdots < b_{k} = \infty$ on the second coordinate such that $F(a_i, b_j) = (ij)/k^2$.
+
+    Now consider any point $(a, b) \in \mathbb{R}^2$, we can find $i, j$ such that $a \in [a_i, a_{i+1}]$ and $b \in [b_j, b_{j+1}]$. We thus have the inequalities
+    \begin{align}
+        F_n(a, b) - F(a, b) &\leq F_n(a_{i+1}, b_{j+1}) - F(a_i, b_j) \\ &= F_n(a_{i+1}, b_{j+1}) - F(a_{i+1}, b_{j+1}) + (i + j + 1)/k^2 
+        \\ &\geq F_n(a_{i}, b_{j}) - F(a_{i+1}, b_{j+1})
+        \\ &= F_n(a_{i}, b_{j}) - F(a_{i}, b_{j}) - (i + j + 1)/k^2
+    \end{align}
+    the rest is the same as the 1-dimensional case since $F_n \to F$ and $(i + j + 1)/k^2 \leq (2k + 1)/k^2$ will vanish as $k \to \infty$.
+\end{proof}
+
+\subsection{Stochastic Big-O and Little-o Notations}
 \end{document}

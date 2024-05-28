@@ -24,3 +24,5 @@
 
 # Ignore the out folder
 /out/
+
+.DS_Store
