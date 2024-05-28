@@ -119,7 +119,7 @@ We start by defining the different modes of convergence for random variables. Le
 The textbook has proven all the equivalence except for $(ii) \Leftrightarrow (iv)$, which we give the proof below together with other proof supplements.
 
 \begin{proof}[Proof supplements of Lemma 1]
-    We first supplement $(i) \Rightarrow (ii)$ by proving that a continuous function on a compact set is uniformly continuous. Let $f$ be a continuous function on a compact domain $K$. By contradiction, if $f$ is not uniformly continuous, let $\epsilon > 0$, then for every $n \in \mathbb{N}$, there exists $x_n, y_n \in K$ such that $|x_n - y_n| < 1/n$ but $|f(x_n) - f(y_n)| \geq \epsilon$. Since $K$ is compact, we can extract a convergent subsequence $x_{n_k} \to x$ and $y_{n_k} \to y$. Then by continuity of $f$, we have $f(x) = \lim_{n \to \infty} f(x_n) = \lim_{n \to \infty} f(y_n) = f(y)$, which contradicts the assumption that $|f(x) - f(y)| \geq \epsilon$.
+    We first supplement $(i) \Rightarrow (ii)$ by proving that a continuous function on a compact set is uniformly continuous. Let $f$ be a continuous function on a compact domain $K$. By contradiction, if $f$ is not uniformly continuous, let $\epsilon > 0$, then for every $n \in \mathbb{N}$, there exists $x_n, y_n \in K$ such that $|x_n - y_n| < 1/n$ but $|f(x_n) - f(y_n)| \geq \epsilon$. Since $K$ is compact, we can extract a convergent subsequence $x_{n_k} \to x$ and $y_{n_k} \to y$. Then by continuity of $f$, we have $f(x) = \lim_{k \to \infty} f(x_{n_k}) = \lim_{k \to \infty} f(y_{n_k}) = f(y)$, which contradicts the assumption that $|f(x) - f(y)| \geq \epsilon$.
 
     Next we clarify $(iii) \Rightarrow (v)$ by explaining the Lipschitz approximation to the indicator function on open set $G$. Consider the sequence of Lipschitz functions $f_m$ defined as
     \begin{equation}
@@ -221,5 +221,31 @@ The following theorem gives the connection between different modes of convergenc
 \end{itemize}
 \end{theorem}
 A quick conclusion is that convergence in distribution is the weakest form of convergence, while almost sure convergence is the strongest.
+\begin{proof}[Proof supplement]\label{thm:connection}
+    The proof for $(i)$ is trivial: if $X_n \xrightarrow{a.s.} X$, then for any $\epsilon > 0$ if we define $A_n = \left\{ k \geq n : d(X_k, X) > \epsilon \right\}$, we know that $A_n \downarrow \emptyset$ as $n \to \infty$. Therefore 
+    \begin{equation}
+        \lim_{n\to\infty} P(d(X_n, X) > \epsilon) \leq \lim_{n\to\infty} P(A_n) = 0
+    \end{equation}
+    it is worth noting that the last equality is by continuity of probability measure.
 
+    For $(ii)$ we supplement a direct proof by showing that convergence in probability leads to $\E f(X_n) \to \E f(X)$ by Lemma \ref{lemma:portmanteau} for all bounded, continuous functions $f$. Firstly recall that by continuous mapping theorem, if $f$ is continuous, then $f(X_n) \xrightarrow{P} f(X)$, i.e.
+    \begin{equation}
+        \lim_{n\to\infty} P(|f(X_n) - f(X)| > \epsilon) = 0
+    \end{equation}
+    for any fixed $\epsilon > 0$. As a result, we have
+    \begin{equation}
+        \lim_{n\to\infty} \E |f(X_n) - f(X)| \leq \epsilon
+    \end{equation}
+    since $\epsilon$ is arbitrary, we have $\E |f(X_n) - f(X)| \to 0$. This is equivalent to $\E f(X_n) \to \E f(X)$.
+\end{proof}
+The $(v)$ in Theorem $\ref{thm:connection}$ is especially useful in proving the \textbf{Slutsky's lemma}.
+\begin{lemma}[Slutsky's Lemma]
+    Let $X_n, X$ and $Y_n$ be random variables. If $X_n \xrightarrow{d} X$ and $Y_n \xrightarrow{d} c$ for a constant $c$, then
+    \begin{enumerate}
+        \item[(i)] $X_n + Y_n \xrightarrow{d} X + c$
+        \item[(ii)] $X_n Y_n \xrightarrow{d} X \cdot c$
+        \item[(iii)] $X_n / Y_n \xrightarrow{d} X / c$ if $c \neq 0$.
+    \end{enumerate}
+\end{lemma}
+In each of the cases above, we leverage points $(iii), (v)$ in $\ref{thm:connection}$ first, then define a continuous mapping $f(X_n, Y_n)$ to enable continuous mapping.
 \end{document}
