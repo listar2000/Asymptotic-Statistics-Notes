@@ -257,13 +257,46 @@ Finally, if the distribution function of the limit $X$ is continuous, then conve
     Here we supplement a proof for the 2-dimensional case. Let $F$ and $F_n$ denotes the distribution function of $X$ and $X_n$ respectively. By continuity of $F$ we can find $k$ points $-\infty = a_1 < a_2 < \cdots < a_{k} = \infty$ on the first coordinate and another $k$ points $-\infty = b_1 < b_2 < \cdots < b_{k} = \infty$ on the second coordinate such that $F(a_i, b_j) = (ij)/k^2$.
 
     Now consider any point $(a, b) \in \mathbb{R}^2$, we can find $i, j$ such that $a \in [a_i, a_{i+1}]$ and $b \in [b_j, b_{j+1}]$. We thus have the inequalities
-    \begin{align}
+    \begin{align*}
         F_n(a, b) - F(a, b) &\leq F_n(a_{i+1}, b_{j+1}) - F(a_i, b_j) \\ &= F_n(a_{i+1}, b_{j+1}) - F(a_{i+1}, b_{j+1}) + (i + j + 1)/k^2 
         \\ &\geq F_n(a_{i}, b_{j}) - F(a_{i+1}, b_{j+1})
         \\ &= F_n(a_{i}, b_{j}) - F(a_{i}, b_{j}) - (i + j + 1)/k^2
-    \end{align}
+    \end{align*}
     the rest is the same as the 1-dimensional case since $F_n \to F$ and $(i + j + 1)/k^2 \leq (2k + 1)/k^2$ will vanish as $k \to \infty$.
 \end{proof}
 
 \subsection{Stochastic Big-O and Little-o Notations}
+\begin{definition}
+    The $O_p$ (Big-O) notation denotes how a sequence of random variables are bounded in probability. We say $X_n = O_p(a_n)$ if for every $\epsilon > 0$, there exists finite $M, N > 0$ such that
+    \begin{equation}
+        \sup_{m \geq N} P\left( \left|\frac{X_m}{a_m}\right| > M \right) < \epsilon
+    \end{equation}
+\end{definition}
+\begin{definition}
+    The $o_p$ (Little-o) notation denotes how a sequence of random variables converges to 0 in probability. We say $X_n = o_p(a_n)$ if for every $\epsilon > 0$, we have
+    \begin{equation}
+        \lim_{n \to \infty}P\left( \left|\frac{X_n}{a_n}\right| > \epsilon \right) = 0
+    \end{equation}
+    which is essentially $\frac{X_n}{a_n} \xrightarrow{P} 0$.
+\end{definition}
+A few important results can be shown using the definitions. The commonly used ones are:
+\begin{enumerate}
+    \item If $X_n = O_p(1)$ and $Y_n = O_p(1)$, then $X_n + Y_n = O_p(1)$;
+    \item If $X_n = O_p(1)$ and $Y_n = o_p(1)$, then $X_nY_n = o_p(1)$;
+    \item If $X_n = o_p(1)$ and $Y_n = o_p(1)$, then $X_n + Y_n = o_p(1)$.
+    \item If $X_n = O_p(1)$ and $Y_n = O_p(1)$, then $X_nY_n = O_p(1)$.
+\end{enumerate}
+For the fourth point, we can easily find $M_1, M_2, N_1, N_2$ such that
+\begin{equation}
+    P\left( \left|X_n\right| > M_1 \right) < \epsilon \quad \text{and} \quad P\left( \left|Y_n\right| > M_2 \right) < \epsilon
+\end{equation}
+for $n \geq \max{N_1, N_2}$. Then we have
+\begin{equation}
+    P\left( \left|X_nY_n\right| > M_1M_2 \right) \leq P\left( \left|X_n\right| > M_1 \right) \cdot P\left( \left|Y_n\right| > M_2 \right) < \epsilon^2
+\end{equation}
+which easily implies $X_nY_n = O_p(1)$ since $\epsilon$ is arbitrary.
+\newpage
+% Below is chapter 6
+\setcounter{section}{5}
+\section{Contiguity}
 \end{document}
