@@ -23,14 +23,14 @@
 % Cover Page and ToC
 % ------------------------------------------------------------------------------
 \title{ \normalsize \textsc{}
-		\\ [2.0cm]
-		\HRule{1.5pt} \\
-		\LARGE \textbf{\textit{Asymptotic Statistics} \\ \Large{by VAN DER VAART}
-		\HRule{2.0pt} \\ \vspace*{10\baselineskip}}
-		}
+\\ [2.0cm]
+\HRule{1.5pt} \\
+\LARGE \textbf{\textit{Asymptotic Statistics} \\ \Large{by VAN DER VAART}
+    \HRule{2.0pt} \\ \vspace*{10\baselineskip}}
+}
 \date{5/24/2024 - ?}
 \author{Scribed by:
-\textbf{Sida Li}}
+    \textbf{Sida Li}}
 
 \maketitle
 \newpage
@@ -47,9 +47,9 @@
 
 We start by refreshing the rigorous definition of \textbf{measure space}, then proceed with examples.
 
-Given a set $\mathcal{X}$, a $\sigma$-\textbf{algebra} $\mathcal{A}$ is a collection of subsets of $\mathcal{X}$ that (1) contains $\mathcal{X}$ and the empty set $\emptyset$, (2) is closed under complements, and (3) is closed under countable unions. 
+Given a set $\mathcal{X}$, a $\sigma$-\textbf{algebra} $\mathcal{A}$ is a collection of subsets of $\mathcal{X}$ that (1) contains $\mathcal{X}$ and the empty set $\emptyset$, (2) is closed under complements, and (3) is closed under countable unions.
 
-A \textbf{measure} $\mu:\mathcal{A} \rightarrow [0, \infty]$ is a function that assigns a non-negative real number to each element in $\mathcal{A}$, such that $\mu(\emptyset) = 0$ and $\mu$ is countably additive, i.e. for any disjoint sequence of sets $\{A_i\}_{i=1}^{\infty}$, 
+A \textbf{measure} $\mu:\mathcal{A} \rightarrow [0, \infty]$ is a function that assigns a non-negative real number to each element in $\mathcal{A}$, such that $\mu(\emptyset) = 0$ and $\mu$ is countably additive, i.e. for any disjoint sequence of sets $\{A_i\}_{i=1}^{\infty}$,
 \begin{equation}
     \mu\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} \mu(A_i)
 \end{equation}
@@ -57,7 +57,7 @@ The triple $(\mathcal{X}, \mathcal{A}, \mu)$ is called a \textbf{measure space}.
 
 \subsection{Lebesgue Measure and Why We Care}
 
-Many statistics textbook, including Keener's, assures the readers that ``measure theory is not needed'' -- the motivation behind this simplification is that most of the time, we are working with the \textbf{Lebesgue measure} on $\mathbb{R}^d$. Lebesgue measure is compatible with the usual notion of length, area, and volume (in 1, 2, and 3-dimensions), and is defined on the \textbf{Borel $\sigma$-algebra} $\mathcal{B}(\mathbb{R}^d)$, which is the smallest $\sigma$-algebra containing all open sets in $\mathbb{R}^d$. 
+Many statistics textbook, including Keener's, assures the readers that ``measure theory is not needed'' -- the motivation behind this simplification is that most of the time, we are working with the \textbf{Lebesgue measure} on $\mathbb{R}^d$. Lebesgue measure is compatible with the usual notion of length, area, and volume (in 1, 2, and 3-dimensions), and is defined on the \textbf{Borel $\sigma$-algebra} $\mathcal{B}(\mathbb{R}^d)$, which is the smallest $\sigma$-algebra containing all open sets in $\mathbb{R}^d$.
 
 Another benefits of Lebesgue measure is its connection with our usual notion of integration. If a function $f$ is \textbf{Lebesgue integrable} (whose definition is detailed \href{https://math.stackexchange.com/questions/1716526/what-does-it-mean-to-say-that-a-function-is-integrable-with-respect-to-a-measure}{here}), then its integral is:
 \begin{equation}
@@ -74,46 +74,46 @@ for $\nu$-integrable functions $f$. Hopefully this clarifies why we can safely i
 \section{Convergence of Random Variables}
 
 \begin{note}
-	This part is largely following the main definitions and proofs in Chapter 2 of van der Vaart's book.
+    This part is largely following the main definitions and proofs in Chapter 2 of van der Vaart's book.
 \end{note}
 % ------------------------------------------------------------------------------
 
 \subsection{Modes of Convergence}
 
-We start by defining the different modes of convergence for random variables. Let $\{X_n\}_{n=1}^{\infty}$ be a sequence of random variables, and $X$ be another random variable. 
+We start by defining the different modes of convergence for random variables. Let $\{X_n\}_{n=1}^{\infty}$ be a sequence of random variables, and $X$ be another random variable.
 
 \begin{itemize}
     \item We say that $X_n$ \textbf{converges in distribution} to $X$ if
-    \begin{equation}
-        \lim_{n \rightarrow \infty} P(X_n \leq x) = P(X \leq x)
-    \end{equation}
-    for any $x$ such that the mapping $x \to P(X \leq x)$ is continuous. We denote this convergence as $X_n \xrightarrow{d} X$.
-    
-    \item We say $X_n$ \textbf{converges in probability} to $X$ if for any $\epsilon > 0$, 
-    \begin{equation}
-        \lim_{n \rightarrow \infty} P(d(X_n, X) > \epsilon) = 0
-    \end{equation}
-    where $d(\cdot, \cdot)$ is a distance metric between like Euclidean distance. We denote this convergence as $X_n \xrightarrow{P} X$.
+          \begin{equation}
+              \lim_{n \rightarrow \infty} P(X_n \leq x) = P(X \leq x)
+          \end{equation}
+          for any $x$ such that the mapping $x \to P(X \leq x)$ is continuous. We denote this convergence as $X_n \xrightarrow{d} X$.
 
-    \item We say $X_n$ \textbf{converges almost surely} to $X$ if 
-    \begin{equation}
-        P\left(\lim_{n \rightarrow \infty} d(X_n, X) = 0  \right) = 1
-    \end{equation}
-    we also denote this convergence as $X_n \xrightarrow{a.s.} X$. This is considered as a stronger form of convergence than the two modes above.
+    \item We say $X_n$ \textbf{converges in probability} to $X$ if for any $\epsilon > 0$,
+          \begin{equation}
+              \lim_{n \rightarrow \infty} P(d(X_n, X) > \epsilon) = 0
+          \end{equation}
+          where $d(\cdot, \cdot)$ is a distance metric between like Euclidean distance. We denote this convergence as $X_n \xrightarrow{P} X$.
+
+    \item We say $X_n$ \textbf{converges almost surely} to $X$ if
+          \begin{equation}
+              P\left(\lim_{n \rightarrow \infty} d(X_n, X) = 0  \right) = 1
+          \end{equation}
+          we also denote this convergence as $X_n \xrightarrow{a.s.} X$. This is considered as a stronger form of convergence than the two modes above.
 \end{itemize}
 
 \begin{lemma}
-\label{lemma:portmanteau}
-\textbf{(Portmanteau)} For any sequence of random variables $X_n$ and $X$ the following statements are equivalent.
-\begin{itemize}
-    \item[(i)] $P(X_n \leq x) \to P(X \leq x)$ for all continuity points of $x \mapsto P(X \leq x)$;
-    \item[(ii)] $\E f(X_n) \to \E f(X)$ for all bounded, continuous functions $f$;
-    \item[(iii)] $\E f(X_n) \to \E f(X)$ for all bounded, Lipschitz functions $f$;
-    \item[(iv)] $\liminf \E f(X_n) \geq \E f(X)$ for all nonnegative, continuous functions $f$;
-    \item[(v)] $\liminf P(X_n \in G) \geq P(X \in G)$ for every open set $G$;
-    \item[(vi)] $\limsup P(X_n \in F) \leq P(X \in F)$ for every closed set $F$;
-    \item[(vii)] $P(X_n \in B) \to P(X \in B)$ for all Borel sets $B$ with $P(X \in \delta B) = 0$, where $\delta B = \overline{B} - \overset{\circ}{B}$ is the boundary of $B$.
-\end{itemize}
+    \label{lemma:portmanteau}
+    \textbf{(Portmanteau)} For any sequence of random variables $X_n$ and $X$ the following statements are equivalent.
+    \begin{itemize}
+        \item[(i)] $P(X_n \leq x) \to P(X \leq x)$ for all continuity points of $x \mapsto P(X \leq x)$;
+        \item[(ii)] $\E f(X_n) \to \E f(X)$ for all bounded, continuous functions $f$;
+        \item[(iii)] $\E f(X_n) \to \E f(X)$ for all bounded, Lipschitz functions $f$;
+        \item[(iv)] $\liminf \E f(X_n) \geq \E f(X)$ for all nonnegative, continuous functions $f$;
+        \item[(v)] $\liminf P(X_n \in G) \geq P(X \in G)$ for every open set $G$;
+        \item[(vi)] $\limsup P(X_n \in F) \leq P(X \in F)$ for every closed set $F$;
+        \item[(vii)] $P(X_n \in B) \to P(X \in B)$ for all Borel sets $B$ with $P(X \in \delta B) = 0$, where $\delta B = \overline{B} - \overset{\circ}{B}$ is the boundary of $B$.
+    \end{itemize}
 \end{lemma}
 
 The textbook has proven all the equivalence except for $(ii) \Leftrightarrow (iv)$, which we give the proof below together with other proof supplements.
@@ -124,7 +124,7 @@ The textbook has proven all the equivalence except for $(ii) \Leftrightarrow (iv
     Next we clarify $(iii) \Rightarrow (v)$ by explaining the Lipschitz approximation to the indicator function on open set $G$. Consider the sequence of Lipschitz functions $f_m$ defined as
     \begin{equation}
         f_m(x) = \begin{cases}
-            1 & \text{if } d(x, G^c) \geq 1/m \\
+            1                 & \text{if } d(x, G^c) \geq 1/m \\
             m \cdot d(x, G^c) & \text{if } d(x, G^c) < 1/m
         \end{cases}
     \end{equation}
@@ -138,8 +138,8 @@ The textbook has proven all the equivalence except for $(ii) \Leftrightarrow (iv
     \begin{equation}
         \liminf_{n\to\infty} \E f(X_n) \geq \liminf_{n\to\infty} \E f_m(X_n) = \E f_m(X)
     \end{equation}
-    where the last equality is by $(ii)$. As $m \to \infty$, the RHS increases to $\E f(X)$ by the monotone convergence theorem. 
-    
+    where the last equality is by $(ii)$. As $m \to \infty$, the RHS increases to $\E f(X)$ by the monotone convergence theorem.
+
     For the reverse direction, let $m$ and $M$ be the lower and upper bounds of $f$, and define functions $g = f + m$ and $h = M - f$. Apparently both $g$ and $h$ are nonnegative, continuous functions. Then we have
     \begin{equation}
         \liminf_{n\to\infty} \E g(X_n) \geq \E g(X) \quad \text{and} \quad \liminf_{n\to\infty} \E h(X_n) \geq \E h(X)
@@ -153,10 +153,10 @@ The next theorem is about how continuous mapping preserves all three modes of co
     \label{thm:cont_map_thm}
     \textbf{(Continuous Mapping Theorem).} Let $g: \mathbb{R}^d \to \mathbb{R}^k$ be continuous at every point of a set \( C \) such that \( P(X \in C) = 1 \)
     \begin{enumerate}
-    \item[(i)] If $X_n \xrightarrow{d} X$, then $g(X_n) \xrightarrow{d} g(X)$.
-    \item[(ii)] If $X_n \xrightarrow{P} X$, then $g(X_n) \xrightarrow{P} g(X)$.
-    \item[(iii)] If $X_n \xrightarrow{a.s.} X$, then $g(X_n) \xrightarrow{a.s.} g(X)$.
-    \end{enumerate}   
+        \item[(i)] If $X_n \xrightarrow{d} X$, then $g(X_n) \xrightarrow{d} g(X)$.
+        \item[(ii)] If $X_n \xrightarrow{P} X$, then $g(X_n) \xrightarrow{P} g(X)$.
+        \item[(iii)] If $X_n \xrightarrow{a.s.} X$, then $g(X_n) \xrightarrow{a.s.} g(X)$.
+    \end{enumerate}
 \end{theorem}
 
 \begin{proof}[Proof supplment of Theorem \ref*{thm:cont_map_thm}]
@@ -174,12 +174,12 @@ The next theorem is about how continuous mapping preserves all three modes of co
 % \bibliography{References.bib}
 
 % ------------------------------------------------------------------------------
-For a sequence of random variables $\left\{ X_n \right\}$, the concept of \textbf{uniformly tightness} (also known as \textbf{bounded in probability}) states that for every $\epsilon > 0$, there exists a constant $M$ such that 
+For a sequence of random variables $\left\{ X_n \right\}$, the concept of \textbf{uniformly tightness} (also known as \textbf{bounded in probability}) states that for every $\epsilon > 0$, there exists a constant $M$ such that
 \begin{equation}
     \sup_{n} P(|X_n| > M) < \epsilon
 \end{equation}
 \textbf{Prohorov's theorem} then states the equivalence between uniformly tightness and convergence in distribution.
-\begin{theorem}
+\begin{theorem}\label{thm:prohorov}
     Let $\left\{ X_n \right\}$ be a sequence of random variables in $\mathbb{R}^k$.
     \begin{itemize}
         \item[(i)] If $X_n \xrightarrow{d} X$ for some $X$, then $\{X_n : n \in \mathbb{N}\}$ is uniformly tight;
@@ -197,32 +197,32 @@ For a sequence of random variables $\left\{ X_n \right\}$, the concept of \textb
 
     A \textbf{defective distribution function} is one that shares the same properties as a distribution function, except that its limits at infinities might be between 0 and 1.
 \end{lemma}
-\begin{proof}[Proof supplement] we skip over everything up to the diagonalization argument. Now we have a subsequence \( \left\{ F_{n_j} \right\}\) such that \(F_{n_j}(q_i) \to G(q_i)\) for each $q \in \mathbb{Q}$ (here for simplicity we deal with 1-dimensional case). We define 
-\begin{equation}
-    F(x) = \inf_{q > x} G(q)
-\end{equation}
-here we mainly supplement the ``monotonicity'' argument. If $x$ is a coninuity point of $F$, then we can always find rationals $q < x < q'$ such that $G(q) < F(x) < G(q')$ and $G(q') - G(q) < \epsilon$ for any $\epsilon > 0$. Now since $F_{n_j}(q) \to G(q)$ and same for $q'$, we have 
-\begin{equation}
-    G(q') = \liminf F_{n_j}(q') \geq \liminf F_{n_j}(x) \geq \liminf F_{n_j}(q) = G(q)
-\end{equation}
-which directly tells us that $\|\liminf F_{n_j}(x) - F(x)\| < \epsilon$. Similarly showing the $\limsup$ part gives us the desired result.
+\begin{proof}[Proof supplement] we skip over everything up to the diagonalization argument. Now we have a subsequence \( \left\{ F_{n_j} \right\}\) such that \(F_{n_j}(q_i) \to G(q_i)\) for each $q \in \mathbb{Q}$ (here for simplicity we deal with 1-dimensional case). We define
+    \begin{equation}
+        F(x) = \inf_{q > x} G(q)
+    \end{equation}
+    here we mainly supplement the ``monotonicity'' argument. If $x$ is a coninuity point of $F$, then we can always find rationals $q < x < q'$ such that $G(q) < F(x) < G(q')$ and $G(q') - G(q) < \epsilon$ for any $\epsilon > 0$. Now since $F_{n_j}(q) \to G(q)$ and same for $q'$, we have
+    \begin{equation}
+        G(q') = \liminf F_{n_j}(q') \geq \liminf F_{n_j}(x) \geq \liminf F_{n_j}(q) = G(q)
+    \end{equation}
+    which directly tells us that $\|\liminf F_{n_j}(x) - F(x)\| < \epsilon$. Similarly showing the $\limsup$ part gives us the desired result.
 \end{proof}
 \subsection{Connection Between Different Modes of Convergence}
 The following theorem gives the connection between different modes of convergence.
 \begin{theorem}
     Let $X_n, X$ and $Y_n$ be random vectors. Then
-\begin{itemize}
-    \item[(i)] $X_n \xrightarrow{a.s.} X$ implies $X_n \xrightarrow{P} X$;
-    \item[(ii)] $X_n \xrightarrow{P} X$ implies $X_n \xrightarrow{d} X$;
-    \item[(iii)] $X_n \xrightarrow{P} c$ for a constant $c$ if and only if $X_n \xrightarrow{d} c$;
-    \item[(iv)] if $X_n \xrightarrow{d} X$ and $d(X_n, Y_n) \xrightarrow{P} 0$, then $Y_n \xrightarrow{d} X$;
-    \item[(v)] if $X_n \xrightarrow{d} X$ and $Y_n \xrightarrow{P} c$ for a constant $c$, then $(X_n, Y_n) \xrightarrow{d} (X, c)$;
-    \item[(vi)] if $X_n \xrightarrow{P} X$ and $Y_n \xrightarrow{P} Y$, then $(X_n, Y_n) \xrightarrow{P} (X, Y)$.
-\end{itemize}
+    \begin{itemize}
+        \item[(i)] $X_n \xrightarrow{a.s.} X$ implies $X_n \xrightarrow{P} X$;
+        \item[(ii)] $X_n \xrightarrow{P} X$ implies $X_n \xrightarrow{d} X$;
+        \item[(iii)] $X_n \xrightarrow{P} c$ for a constant $c$ if and only if $X_n \xrightarrow{d} c$;
+        \item[(iv)] if $X_n \xrightarrow{d} X$ and $d(X_n, Y_n) \xrightarrow{P} 0$, then $Y_n \xrightarrow{d} X$;
+        \item[(v)] if $X_n \xrightarrow{d} X$ and $Y_n \xrightarrow{P} c$ for a constant $c$, then $(X_n, Y_n) \xrightarrow{d} (X, c)$;
+        \item[(vi)] if $X_n \xrightarrow{P} X$ and $Y_n \xrightarrow{P} Y$, then $(X_n, Y_n) \xrightarrow{P} (X, Y)$.
+    \end{itemize}
 \end{theorem}
 A quick conclusion is that convergence in distribution is the weakest form of convergence, while almost sure convergence is the strongest.
 \begin{proof}[Proof supplement]\label{thm:connection}
-    The proof for $(i)$ is trivial: if $X_n \xrightarrow{a.s.} X$, then for any $\epsilon > 0$ if we define $A_n = \left\{ k \geq n : d(X_k, X) > \epsilon \right\}$, we know that $A_n \downarrow \emptyset$ as $n \to \infty$. Therefore 
+    The proof for $(i)$ is trivial: if $X_n \xrightarrow{a.s.} X$, then for any $\epsilon > 0$ if we define $A_n = \left\{ k \geq n : d(X_k, X) > \epsilon \right\}$, we know that $A_n \downarrow \emptyset$ as $n \to \infty$. Therefore
     \begin{equation}
         \lim_{n\to\infty} P(d(X_n, X) > \epsilon) \leq \lim_{n\to\infty} P(A_n) = 0
     \end{equation}
@@ -258,7 +258,7 @@ Finally, if the distribution function of the limit $X$ is continuous, then conve
 
     Now consider any point $(a, b) \in \mathbb{R}^2$, we can find $i, j$ such that $a \in [a_i, a_{i+1}]$ and $b \in [b_j, b_{j+1}]$. We thus have the inequalities
     \begin{align*}
-        F_n(a, b) - F(a, b) &\leq F_n(a_{i+1}, b_{j+1}) - F(a_i, b_j) \\ &= F_n(a_{i+1}, b_{j+1}) - F(a_{i+1}, b_{j+1}) + (i + j + 1)/k^2 
+        F_n(a, b) - F(a, b) & \leq F_n(a_{i+1}, b_{j+1}) - F(a_i, b_j) \\ &= F_n(a_{i+1}, b_{j+1}) - F(a_{i+1}, b_{j+1}) + (i + j + 1)/k^2
         \\ &\geq F_n(a_{i}, b_{j}) - F(a_{i+1}, b_{j+1})
         \\ &= F_n(a_{i}, b_{j}) - F(a_{i}, b_{j}) - (i + j + 1)/k^2
     \end{align*}
@@ -300,9 +300,9 @@ which easily implies $X_nY_n = O_p(1)$ since $\epsilon$ is arbitrary.
 \setcounter{section}{5}
 \section{Contiguity}
 \begin{note}
-In probability theory, two sequences of probability measures are said to be \textbf{contiguous} if asymptotically they share the same support. Thus the notion of \textbf{contiguity} extends the concept of absolute continuity to the sequences of measures.
+    In probability theory, two sequences of probability measures are said to be \textbf{contiguous} if asymptotically they share the same support. Thus the notion of \textbf{contiguity} extends the concept of absolute continuity to the sequences of measures.
 
-The concept was originally introduced by \textbf{Le Cam} (1960) as part of his foundational contribution to the development of asymptotic theory in mathematical statistics. This section blends in VDV's textbook and Peter Barlett's STAT 210B lecture notes\footnotemark.
+    The concept was originally introduced by \textbf{Le Cam} (1960) as part of his foundational contribution to the development of asymptotic theory in mathematical statistics. This section blends in VDV's textbook and Peter Barlett's STAT 210B lecture notes\footnotemark.
 \end{note}
 \footnotetext{https://www.stat.berkeley.edu/~bartlett/courses/2013spring-stat210b/notes/21notes.pdf}
 
@@ -319,27 +319,51 @@ With these definitions, we can start look into the densities. Let $p$ and $q$ be
     Q^a(A) = Q(A\cap \Omega_p) \quad \text{and} \quad Q^\perp(A) = Q(A\cap \Omega_p^c)
 \end{equation}
 for any measurable set $A$. This is also called the \textbf{Lebesgue decomposition} of $Q$ with respect to $P$. Using these definitions, we have the following lemma:
-\begin{lemma}
+\begin{lemma}\label{lemma:contiguity}
     Let \(P\) and \(Q\) be probability measures with densities \(p\) and \(q\) with respect to a measure \(\mu\).
-\begin{enumerate}
-    \item[(i)] \(Q = Q^a + Q^\perp\), \(Q^a \ll P\), \(Q^\perp \perp P\).
-    \item[(ii)] \(Q^a(A) = \int_A \left(q/p\right) dP\) for every measurable set \(A\).
-    \item[(iii)] \(Q \ll P \:\Longleftrightarrow\: Q(\{p = 0\}) = 0 \:\Longleftrightarrow\: \int \left(q/p\right) dP = 1\).
-\end{enumerate}
-\end{lemma}\label{lemma:contiguity}
+    \begin{enumerate}
+        \item[(i)] \(Q = Q^a + Q^\perp\), \(Q^a \ll P\), \(Q^\perp \perp P\).
+        \item[(ii)] \(Q^a(A) = \int_A \left(q/p\right) dP\) for every measurable set \(A\).
+        \item[(iii)] \(Q \ll P \:\Longleftrightarrow\: Q(\{p = 0\}) = 0 \:\Longleftrightarrow\: \int \left(q/p\right) dP = 1\).
+    \end{enumerate}
+\end{lemma}
 \begin{proof}[Proof supplement]
     Here's a clearer proof for $Q^a \ll P$. Consider any $\mathcal{O} \in \mathcal{A}$ such that $P(\mathcal{O})$. Thus we have $\mu(\mathcal{O}\cap\Omega_P) = \mu(\{x \in \mathcal{O}: p(x) > 0\}) = 0$. Thus $Q^\perp(\mathcal{O}) = 0$ since $\mu$ is the dominating measure.
 \end{proof}
-The intuition behind $(iii)$ in Lemma \ref{lemma:contiguity} is immense. For any two measures $P$ and $Q$, very likeliy they are neither absolutely continuous nor orthogonal. However, there is always a way to ``generate'' a new measure $Q^a$ from $Q$ that is absolutely continuous with respect to $P$ (and vice versa). $Q^a$ might not be a valid probability measure, but when it does, we know that $Q$ is absolutely continuous with respect to $P$.
+The intuition behind $(iii)$ in Lemma \ref{lemma:contiguity} is immense. For any two measures $P$ and $Q$, very likely they are neither absolutely continuous nor orthogonal. However, there is always a way to ``generate'' a new measure $Q^a$ from $Q$ that is absolutely continuous with respect to $P$ (and vice versa). $Q^a$ might not be a valid probability measure, but when it does, we know that $Q$ is absolutely continuous with respect to $P$.
 
 In statistics, the Radon-Nikodym derivative $q/p$ is the density of $Q^a$ with respect to $P$, as illustrated in \ref{lemma:contiguity} $(ii)$. However, people often denotes:
-\begin{equation}
+\begin{equation}\label{eq:p-eq-def}
     \frac{dQ}{dP} := \frac{dQ^a}{dP} = \frac{q}{p} \quad P - a.s.
 \end{equation}
 which is only $P$-almost surely unique, and we can feel free to define the quotient for $p = 0$. In general, for nonnegative measurable function $f$ and arbitrary measures $P$ and $Q$:
-\begin{equation}
+\begin{equation}\label{eq:p-eq-ineq}
     \int f \, dQ \geq \int_{p>0} f q \, d\mu = \int_{p>0} f \frac{q}{p} p \, d\mu = \int f \frac{dQ}{dP} \, dP
 \end{equation}
 
 \subsection{Contiguity of Sequences of Measures}
+\begin{definition}
+    The sequence of random variables $Q_n$ is \textbf{contiguous} to the sequence $P_n$ if $P_n(A_n) \to 0$ implies $Q_n(A_n) \to 0$ for all sequences of measurable sets $A_n$. We denote this as $P_n \triangleleft Q_n$. $P_n$ and $Q_n$ are \textbf{mutually contiguous} if $P_n \triangleleft Q_n$ and $Q_n \triangleleft P_n$.
+\end{definition}
+$dQ_n/dP_n$ and $dP_n/dQ_n$ defined from \ref{eq:p-eq-def} are nonnegative, and results from \ref{eq:p-eq-ineq} directly shows
+\begin{equation}
+    \E_{P_n} \frac{dQ_n}{dP_n} \leq 1 \quad \text{and} \quad \E_{Q_n} \frac{dP_n}{dQ_n} \leq 1
+\end{equation}
+Thus, Prohorov's theorem (Theorem \ref{thm:prohorov}) tells us that both $dQ_n/dP_n$ and $dP_n/dQ_n$ have a weakly convergent subsequence\footnote{by Radon-Nikodym it is easy to see that these quotients are functions $\Omega \to [0, \infty)$, so we can treat them as random variables.}. The key insight is that the contiguity relationship between $P_n$ and $Q_n$ can be understood by investigating the asymptotic behavior of these subsequences.
+\begin{lemma}[Le Cam's First Lemma]
+    Let \(P_n\) and \(Q_n\) be sequences of probability measures on measurable spaces \((\Omega_n, \mathcal{A}_n)\). Then the following statements are equivalent:
+    \begin{enumerate}
+        \item[(i)] \(Q_n \triangleleft P_n\).
+        \item[(ii)] If \(dP_n/dQ_n \overset{Q_n}{\rightsquigarrow} U\) along a subsequence, then \(\text{P}(U > 0) = 1\).
+        \item[(iii)] If \(dQ_n/dP_n \overset{P_n}{\rightsquigarrow} V\) along a subsequence, then \(\text{EV} = 1\).
+        \item[(iv)] For any statistics \(T_n : \Omega_n \mapsto \mathbb{R}^k\): If \(T_n \overset{P_n}{\rightsquigarrow} 0\), then \(T_n \overset{Q_n}{\rightsquigarrow} 0\).
+    \end{enumerate}
+\end{lemma}
+Note that we write $A_n \overset{Q_n}{\rightsquigarrow} B$ if $A_n$ converges in distribution to $B$ along a subsequence under measure $Q_n$, i.e. $Q_n(A_n < x) \to P(B < x)$ for all continuity points.
+
+Le Cam's first lemma is a direct and asymptotic analogy of the results in Lemma \ref{lemma:contiguity}. A cleaner proof than the VDV textbook is given in the review by Li and Babu (2019)\footnote{https://par.nsf.gov/servlets/purl/10202267}. Here's one quote from the review on the difference beteween contiguity and absolute continuity:
+\begin{quote}
+    Despite their conceptual similarity, contiguity and absolute continuity are technically very different: the former characterizes the collective behavior of a pair of sequences of probability measures; the latter that of a pair of probability measures.
+\end{quote}
+
 \end{document}
