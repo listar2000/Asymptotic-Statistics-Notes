@@ -299,4 +299,47 @@ which easily implies $X_nY_n = O_p(1)$ since $\epsilon$ is arbitrary.
 % Below is chapter 6
 \setcounter{section}{5}
 \section{Contiguity}
+\begin{note}
+In probability theory, two sequences of probability measures are said to be \textbf{contiguous} if asymptotically they share the same support. Thus the notion of \textbf{contiguity} extends the concept of absolute continuity to the sequences of measures.
+
+The concept was originally introduced by \textbf{Le Cam} (1960) as part of his foundational contribution to the development of asymptotic theory in mathematical statistics. This section blends in VDV's textbook and Peter Barlett's STAT 210B lecture notes\footnotemark.
+\end{note}
+\footnotetext{https://www.stat.berkeley.edu/~bartlett/courses/2013spring-stat210b/notes/21notes.pdf}
+
+\subsection{Likelihood Ratios (Radon-Nikodym Derivatives)}
+We start by considering two probability measures $P$ and $Q$ on a common measurable space $(\Omega, \mathcal{A})$. The definitions of \textbf{absolutely continuous} and \textbf{orthogonal} (singular) for measures are as follows:
+\begin{definition}
+    Measure $P$ is \textbf{absolutely continuous} with respect to $Q$ if $Q(A) = 0$ implies $P(A) = 0$ for all $A \in \mathcal{A}$. We denote this as $P \ll Q$.
+\end{definition}
+\begin{definition}
+    Measure $P$ is \textbf{orthogonal} (singular) with respect to $Q$ if there exists a set $A \in \mathcal{A}$ such that $Q(A) = 0$ and $P(A^c) = 0$. We denote this as $P \perp Q$.
+\end{definition}
+With these definitions, we can start look into the densities. Let $p$ and $q$ be the densities of $P$ and $Q$ with respect to a common measure $\mu$ (Lebesgue measure). Consider the set $\Omega_P = \left\{ \omega : p(\omega) > 0 \right\}$ and $\Omega_Q = \left\{ \omega : q(\omega) > 0 \right\}$. Then by defintion, we can write measure $Q$ as the sum $Q = Q^a + Q^\perp$ where
+\begin{equation}
+    Q^a(A) = Q(A\cap \Omega_p) \quad \text{and} \quad Q^\perp(A) = Q(A\cap \Omega_p^c)
+\end{equation}
+for any measurable set $A$. This is also called the \textbf{Lebesgue decomposition} of $Q$ with respect to $P$. Using these definitions, we have the following lemma:
+\begin{lemma}
+    Let \(P\) and \(Q\) be probability measures with densities \(p\) and \(q\) with respect to a measure \(\mu\).
+\begin{enumerate}
+    \item[(i)] \(Q = Q^a + Q^\perp\), \(Q^a \ll P\), \(Q^\perp \perp P\).
+    \item[(ii)] \(Q^a(A) = \int_A \left(q/p\right) dP\) for every measurable set \(A\).
+    \item[(iii)] \(Q \ll P \:\Longleftrightarrow\: Q(\{p = 0\}) = 0 \:\Longleftrightarrow\: \int \left(q/p\right) dP = 1\).
+\end{enumerate}
+\end{lemma}\label{lemma:contiguity}
+\begin{proof}[Proof supplement]
+    Here's a clearer proof for $Q^a \ll P$. Consider any $\mathcal{O} \in \mathcal{A}$ such that $P(\mathcal{O})$. Thus we have $\mu(\mathcal{O}\cap\Omega_P) = \mu(\{x \in \mathcal{O}: p(x) > 0\}) = 0$. Thus $Q^\perp(\mathcal{O}) = 0$ since $\mu$ is the dominating measure.
+\end{proof}
+The intuition behind $(iii)$ in Lemma \ref{lemma:contiguity} is immense. For any two measures $P$ and $Q$, very likeliy they are neither absolutely continuous nor orthogonal. However, there is always a way to ``generate'' a new measure $Q^a$ from $Q$ that is absolutely continuous with respect to $P$ (and vice versa). $Q^a$ might not be a valid probability measure, but when it does, we know that $Q$ is absolutely continuous with respect to $P$.
+
+In statistics, the Radon-Nikodym derivative $q/p$ is the density of $Q^a$ with respect to $P$, as illustrated in \ref{lemma:contiguity} $(ii)$. However, people often denotes:
+\begin{equation}
+    \frac{dQ}{dP} := \frac{dQ^a}{dP} = \frac{q}{p} \quad P - a.s.
+\end{equation}
+which is only $P$-almost surely unique, and we can feel free to define the quotient for $p = 0$. In general, for nonnegative measurable function $f$ and arbitrary measures $P$ and $Q$:
+\begin{equation}
+    \int f \, dQ \geq \int_{p>0} f q \, d\mu = \int_{p>0} f \frac{q}{p} p \, d\mu = \int f \frac{dQ}{dP} \, dP
+\end{equation}
+
+\subsection{Contiguity of Sequences of Measures}
 \end{document}
