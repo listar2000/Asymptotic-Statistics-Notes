@@ -350,7 +350,7 @@ $dQ_n/dP_n$ and $dP_n/dQ_n$ defined from \ref{eq:p-eq-def} are nonnegative, and 
     \E_{P_n} \frac{dQ_n}{dP_n} \leq 1 \quad \text{and} \quad \E_{Q_n} \frac{dP_n}{dQ_n} \leq 1
 \end{equation}
 Thus, Prohorov's theorem (Theorem \ref{thm:prohorov}) tells us that both $dQ_n/dP_n$ and $dP_n/dQ_n$ have a weakly convergent subsequence\footnote{by Radon-Nikodym it is easy to see that these quotients are functions $\Omega \to [0, \infty)$, so we can treat them as random variables.}. The key insight is that the contiguity relationship between $P_n$ and $Q_n$ can be understood by investigating the asymptotic behavior of these subsequences.
-\begin{lemma}[Le Cam's First Lemma]
+\begin{lemma}[Le Cam's First Lemma]\label{lemma:lecam1}
     Let \(P_n\) and \(Q_n\) be sequences of probability measures on measurable spaces \((\Omega_n, \mathcal{A}_n)\). Then the following statements are equivalent:
     \begin{enumerate}
         \item[(i)] \(Q_n \triangleleft P_n\).
@@ -365,5 +365,12 @@ Le Cam's first lemma is a direct and asymptotic analogy of the results in Lemma 
 \begin{quote}
     Despite their conceptual similarity, contiguity and absolute continuity are technically very different: the former characterizes the collective behavior of a pair of sequences of probability measures; the latter that of a pair of probability measures.
 \end{quote}
-
+A direct result from Lemma \ref{lemma:lecam1} is what we call the \textbf{Le Cam's third lemma}, which solves the problem of obtaining a $Q_n$-limit law from a $P_n$-limit one.
+\begin{lemma}[Le Cam's Third Lemma]
+    Let \(P_n\) and \(Q_n\) be sequences of probability measures on measurable spaces \((\Omega_n, \mathcal{A}_n)\), and let $X_n: \Omega_n \to \mathbb{R}^k$ be a sequence of random vectors. If \(Q_n \triangleleft P_n\) and 
+    \begin{equation}
+        \left( X_n, \frac{dQ_n}{dP_n} \right) \overset{P_n}{\rightsquigarrow} (X, V)
+    \end{equation}
+    Then $L(B) = \E [\mathbf{1}_B(X)V]$ defines the limiting probability measure so that $X_n \overset{Q_n}{\rightsquigarrow} L$.
+\end{lemma}  
 \end{document}
