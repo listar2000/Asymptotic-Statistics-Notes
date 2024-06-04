@@ -13,8 +13,8 @@
 \usepackage{framed}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{tcolorbox}
-\usepackage{xcolor}
 \usepackage{notes}  % Include the custom style file
+\usepackage[dvipsnames]{xcolor}
 % ------------------------------------------------------------------------------
 
 \begin{document}
@@ -37,6 +37,10 @@
 
 \tableofcontents
 \newpage
+
+% ------------------------------------------------------------------------------
+% Chapter 1
+% ------------------------------------------------------------------------------
 
 \section{Prelim: Probability and Measure}
 \begin{note}
@@ -68,9 +72,10 @@ where the RHS is the familiar Riemann integral. Throughout this notes, we consid
     \int_{\mathbb{R}^d} f(x)\, d\nu(x) = \int_{\mathbb{R}^d} f(x) \frac{d\nu}{d\mu}(x)\, d\mu(x) = \int_{\mathbb{R}^d} f(x)\nu(x) \,dx
 \end{equation}
 for $\nu$-integrable functions $f$. Hopefully this clarifies why we can safely ignore measure theory in most of the (basic) statistics literature.
-
-
 \newpage
+% ------------------------------------------------------------------------------
+% Chapter 2
+% ------------------------------------------------------------------------------
 \section{Convergence of Random Variables}
 
 \begin{note}
@@ -296,8 +301,45 @@ for $n \geq \max{N_1, N_2}$. Then we have
 \end{equation}
 which easily implies $X_nY_n = O_p(1)$ since $\epsilon$ is arbitrary.
 \newpage
-% Below is chapter 6
-\setcounter{section}{5}
+
+\setcounter{section}{4}
+\section{M- and Z- Estimators}
+\subsection{Definitions and Notations}
+M-estimators are a class of estimators that are defined by maximizing an average of some functions of the data. Let $X_1, ..., X_n$ be i.i.d samples from a distribution with parameter of interest $\theta$. We consider a known function $m_\theta:\mathcal{X} \to \mathbb{R}$, and define the objective
+\begin{equation}
+    \theta \mapsto M_n(\theta) = \frac{1}{n} \sum_{i=1}^{n} m_\theta(X_i)
+\end{equation} 
+\begin{definition}
+    An estimator that maximizes $M_n(\theta)$ over all $\theta \in \Theta$ is called an \textbf{M-estimator}.
+\end{definition}
+The solution of $\theta^* = \argmax_{\theta \in \Theta} M_n(\theta)$ is usually carried out by differentiating $M_n(\theta)$ and setting it to 0. This gives a system of equations in the form of 
+\begin{equation}\label{eq:m-est}
+    \Psi_n(\theta) = \sum_{i=1}^{n} \psi_\theta(X_i) = 0
+\end{equation}
+which are also known as \textbf{estimating equations}. Note that if $\theta \in \mathbb{R}^k$, then $\psi_\theta = (\psi_{\theta, 1}, ..., \psi_{\theta, k})$ is a vector-valued function and \ref{eq:m-est} is a short-hand notation for
+\begin{equation}
+    \sum_{i=1}^{n} \psi_{\theta, j}(X_i) = 0, \quad  j = 1, ..., k
+\end{equation}
+\begin{definition}
+    An estimator that satisfies the estimating equations is called a \textbf{Z-estimator}, but it is often called a \textbf{M-estimator} as well.
+\end{definition}
+\begin{example}
+    For the well-known \textbf{maximium likelihood estimator} (MLE), we seek the parameter $\theta$ that maximizes the likelihood function $L(\theta) = \prod_{i=1}^{n} p_\theta(X_i)$, which is equivalent to maximizing the log-likelihood function $\ell(\theta) = \sum_{i=1}^{n} \log p_\theta(X_i)$. Putting it under the above framework, we have 
+    \begin{equation*}
+        m_\theta(x) = \log p_\theta(x) \quad \text{and} \quad \psi_\theta(x) = \nabla_\theta \log p_\theta(x)
+    \end{equation*}
+\end{example}
+Next we summarize some useful notations surrounding the expectations and empirical (distribution) averages of the samples.
+
+Let $P$ be the law of i.i.d. samples $X_1, ..., X_n$. For a measurable function $f: \mathcal{X} \to \mathbb{R}$, we denote $Pf := \E f(X) = \int f\, dP$. We let $\mathbb{P}_n$ be the empirical measure of the samples, i.e. $\mathbb{P}_n = n^{-1} \sum_{i=1}^{n} \delta_{X_i}$, where $\delta_x$ is the Dirac measure at $x$. We also denote $\mathbb{P}_n f = \int f\, d\mathbb{P}_n = n^{-1} \sum_{i=1}^{n} f(X_i)$. The above equations then can be rewritten as 
+\begin{equation}
+    M_n(\theta) = \mathbb{P}_n m_\theta \quad \text{and} \quad \Psi_n(\theta) = \mathbb{P}_n \psi_\theta
+\end{equation}
+Finally, we define the empirical process $\mathbb{G}_n f$ as the centered sums $n^{-1/2} \sum_{i=1}^n \left( f(X_i) - Pf \right)$.
+\newpage
+% ------------------------------------------------------------------------------
+% Chapter 6
+% ------------------------------------------------------------------------------
 \section{Contiguity}
 \begin{note}
     In probability theory, two sequences of probability measures are said to be \textbf{contiguous} if asymptotically they share the same support. Thus the notion of \textbf{contiguity} extends the concept of absolute continuity to the sequences of measures.
@@ -373,4 +415,18 @@ A direct result from Lemma \ref{lemma:lecam1} is what we call the \textbf{Le Cam
     \end{equation}
     Then $L(B) = \E [\mathbf{1}_B(X)V]$ defines the limiting probability measure so that $X_n \overset{Q_n}{\rightsquigarrow} L$.
 \end{lemma}  
+\begin{proof}[Proof supplement]
+    By definition we have $L(\Omega) = \E[V] = 1$, where the last equality is by $(iii)$ Lemma \ref{lemma:lecam1}. This makes sure that $L$ is a valid probability measure. For every measurable step function $f$, we have
+    \begin{equation}
+        \int f \, dL = L(\left\{ f = 1 \right\})= \E[f(X)V]
+    \end{equation}
+    and we can extend this relationship to more complicated functions (simple function, nonnegative function, etc.). Now for any continuous and nonnegative function $f$, we define $g: (x, v) \to f(x)v$ on $\mathbb{R}^k \times [0, \infty)$. Then $g$ is continuous and nonngative as well. Thus, by $(iv)$ in Lemma \ref{lemma:portmanteau}, we have 
+    \begin{align}
+        \liminf_{n\to\infty} \E_{P_n}\, g\left( X_n, \frac{dQ_n}{dP_n} \right) &=  \liminf_{n\to\infty} \int f(X_n)\frac{dQ_n}{dP_n} dP_n\\ 
+        & = \color{red} \liminf_{n\to\infty} \int f(X_n) \,dQ_n\\ 
+        & \geq \int f(X) V dP_{X, V} \\
+        & = \color{Plum} \int f(x) \, dL(x)
+    \end{align}
+    where the {\color{red}red} $\geq$ {\color{Plum}plum} inequality gives us that $X_n \overset{Q_n}{\rightsquigarrow} L$ by Lemma \ref{lemma:portmanteau} in the reverse direction.
+\end{proof}
 \end{document}
