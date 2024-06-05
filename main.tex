@@ -172,11 +172,6 @@ The next theorem is about how continuous mapping preserves all three modes of co
         P\left(\lim_{n\to\infty}d(g(X_n), g(X)) = 0\right) \geq P\left(\lim_{n\to\infty}d(X_n, X) = 0\right) = 1
     \end{equation}
 \end{proof}
-% Reference and Cited Works
-% ------------------------------------------------------------------------------
-
-% \bibliographystyle{apalike}
-% \bibliography{References.bib}
 
 % ------------------------------------------------------------------------------
 For a sequence of random variables $\left\{ X_n \right\}$, the concept of \textbf{uniformly tightness} (also known as \textbf{bounded in probability}) states that for every $\epsilon > 0$, there exists a constant $M$ such that
@@ -302,6 +297,8 @@ for $n \geq \max{N_1, N_2}$. Then we have
 which easily implies $X_nY_n = O_p(1)$ since $\epsilon$ is arbitrary.
 \newpage
 
+% section 5
+
 \setcounter{section}{4}
 \section{M- and Z- Estimators}
 \subsection{Definitions and Notations}
@@ -336,6 +333,24 @@ Let $P$ be the law of i.i.d. samples $X_1, ..., X_n$. For a measurable function 
     M_n(\theta) = \mathbb{P}_n m_\theta \quad \text{and} \quad \Psi_n(\theta) = \mathbb{P}_n \psi_\theta
 \end{equation}
 Finally, we define the empirical process $\mathbb{G}_n f$ as the centered sums $n^{-1/2} \sum_{i=1}^n \left( f(X_i) - Pf \right)$.
+
+\subsection{Consistency}
+When we design an estimator $\hat \theta_n$, it is desirable that $\hat \theta_n$ converges in probability to the ``true parameter'' of interest $\theta$ as $n \to \infty$. For M-estimators, the definition is
+\begin{definition}
+    Let $\hat \theta_n$ be the M-estimator for samples $X_1, ..., X_n$ so that 
+    \begin{equation}
+        \hat \theta_n = \argmax_{\theta \in \Theta} M_n(\theta) = \argmax_{\theta \in \Theta} \mathbb{P}_n m_\theta
+    \end{equation}
+    let $P$ be the law of the samples. The parameter (or ``estimand'') of interest $\theta$ satisfies
+    \begin{equation}
+        \theta = \argmax_{\theta \in \Theta} M_\theta := \argmax_{\theta \in \Theta} P m_\theta
+    \end{equation}
+    then if for all values of $\theta$, $\hat \theta_n \xrightarrow{P} \theta$, we say that $\hat \theta_n$ is \textbf{asymptotically consistent}.
+\end{definition} 
+Despite the definition above, it is \textbf{not guaranteed} that the maximizer for $M_n(\theta)$ will converge to the maximizer of $M_\theta$, provided that the latter exists and is unique. Proving this is the focus of this section. Also note that it is not hard (by Law of Large Numbers and continuous mapping) to find a deterministic function $M'(\theta)$ such that
+\begin{equation}
+    M_n(\theta) \xrightarrow{P} M'(\theta) \quad \text{for all } \theta \in \Theta
+\end{equation}
 \newpage
 % ------------------------------------------------------------------------------
 % Chapter 6
