@@ -349,8 +349,73 @@ When we design an estimator $\hat \theta_n$, it is desirable that $\hat \theta_n
 \end{definition} 
 Despite the definition above, it is \textbf{not guaranteed} that the maximizer for $M_n(\theta)$ will converge to the maximizer of $M_\theta$, provided that the latter exists and is unique. Proving this is the focus of this section. Also note that it is not hard (by Law of Large Numbers and continuous mapping) to find a deterministic function $M'(\theta)$ such that
 \begin{equation}
+    \label{eq:point_conv}
     M_n(\theta) \xrightarrow{P} M'(\theta) \quad \text{for all } \theta \in \Theta
 \end{equation}
+
+The following theorem estiablishes the conditions for the consistency of M-estimators.
+\begin{theorem}[Consistency of M-estimators]\label{thm:mle_consistency}
+    Let $M_n$ be random functions and let $M$ be a fixed function of $\theta$ such that for every $\epsilon > 0$
+    \begin{equation}
+        \sup_{\theta \in \Theta} | M_n(\theta) - M(\theta) | \overset{P}{\rightarrow} 0,
+    \end{equation}
+    \begin{equation}
+        \sup_{\theta : d(\theta, \theta_0) \geq \epsilon} M(\theta) < M(\theta_0).
+    \end{equation}
+    Then any sequence of estimators $\hat{\theta}_n$ with $M_n(\hat{\theta}_n) \geq M_n(\theta_0) - o_P(1)$ converges in probability to $\theta_0$.
+\end{theorem}
+The key insights into the two conditions are:
+\begin{itemize}
+    \item The first condition refers to uniform convergence of $M_n$ to $M$ in probability, which is stronger than the pointwise convergence in \ref{eq:point_conv}.
+    \item The second condition indicates that $\theta_0$ is a \textit{well-separated} maximizer of $M$. It can be shown that this is equivalent to $\theta_0$ being the \textit{unique maximizer} of $M$.
+    \item The requirement for $\hat \theta_n$ is that it \textit{nearly maximizes} $M_n$, which is a weaker condition than requiring it to be the maximizer.
+\end{itemize}
+\begin{proof}[Proof supplement]
+    the following claim is not explained clearly in the VDV book: given that $M_n(\hat{\theta}_n) \geq M_n(\theta_0) - o_P(1)$ and $M_n(\theta_0) \overset{P}{\rightarrow} M(\theta_0)$, we have $M_n(\hat{\theta}_n) \geq M(\theta_0) - o_P(1)$.
+
+    We first notice that if we rewrite $a_n = M(\theta_0) - M_n(\theta_0)$, then $a_n \overset{P}{\rightarrow} 0$, so $a_n = o_P(1)$. We can re-express $M_n(\theta_0) = M(\theta_0) - o_P(1)$, then 
+    \begin{equation}
+        M_n(\hat{\theta}_n) \geq M_n(\theta_0) - o_P(1) \geq M(\theta_0) - o_P(1) - o_P(1) = M(\theta_0) - o_P(1)
+    \end{equation}
+    where the last equality follows from the fact that $o_P(1) + o_P(1) = o_P(1)$.
+\end{proof}
+Theorem \ref{thm:mle_consistency} for M-estimators can be easily applied to Z-estimators, which are essentially the zeros of the criterion functions $\theta \mapsto \Psi_n(\theta)$. Note that any zero of $\Psi_n(\theta)$ is also a maximizer (i.e. M-estimator) of the criterion $\theta \mapsto -\Vert\Psi_n(\theta)\Vert$. The following theorem establishes similar conditions for the consistency of Z-estimators.
+\begin{theorem}[Consistency of Z-estimators]\label{thm:z_consistency}
+    Let $\Psi_n$ be random vector-valued functions and let $\Psi$ be a fixed vector-valued function of $\theta$ such that for every $\epsilon > 0$
+    \begin{equation}
+    \sup_{\theta \in \Theta} \| \Psi_n(\theta) - \Psi(\theta) \| \overset{P}{\rightarrow} 0,
+    \end{equation}
+    \begin{equation}
+    \inf_{\theta : d(\theta, \theta_0) \geq \epsilon} \| \Psi(\theta) \| > 0 = \| \Psi(\theta_0) \|.
+    \end{equation}
+    Then any sequence of estimators $\hat{\theta}_n$ such that $\Psi_n(\hat{\theta}_n) = o_P(1)$ converges in probability to $\theta_0$.
+\end{theorem}
+The proof is trivial and can be done by following the same steps as in Theorem \ref{thm:mle_consistency}. It should be instead noted that both of the theorems above require some sort of uniform convergence of the criterion functions, which is a strong condition. The following lemma shows one way to replace uniformity with other conditions.
+\begin{lemma}
+    Let $\Theta$ be a subset of the real line and let $\Psi_n$ be random functions and $\Psi$ a fixed function of $\theta$ such that $\Psi_n(\theta) \overset{P}{\rightarrow} \Psi(\theta)$ in probability for every $\theta$. Assume that each map $\theta \mapsto \Psi_n(\theta)$ is continuous and has exactly one zero $\hat{\theta}_n$, or is nondecreasing with $\Psi_n(\hat{\theta}_n) = o_P(1)$. Let $\theta_0$ be a point such that $\Psi(\theta_0 - \epsilon) < 0 < \Psi(\theta_0 + \epsilon)$ for every $\epsilon > 0$. Then $\hat{\theta}_n \overset{P}{\rightarrow} \theta_0$.
+\end{lemma}
+\begin{proof}[Proof supplement]
+    Some simple derivations to make the VDV book argument more complete.
+    Firstly, if the map $\theta \mapsto \Psi_n(\theta)$ is continuous and has exactly one zero $\hat{\theta}_n$, then
+    \begin{equation}
+        0 \in (\Psi_n(\theta_0  - \epsilon), \Psi_n(\theta_0 + \epsilon)) \quad \Longrightarrow \quad \hat{\theta}_n \in (\theta_0  - \epsilon, \theta_0  + \epsilon)
+    \end{equation}
+    since continuity (intermediate value theorem) requires some point $\theta'$ in the interval that makes $\Psi_n(\theta') = 0$, and $\theta'$ must be $\hat{\theta}_n$ by uniqueness. 
+
+    We also provide a slightly clearer proof (sketch) for the nondecreasing case. For any $\epsilon, \eta > 0$, if $\Psi_n(\theta_0 - \epsilon) < -\eta$ and $\hat{\theta}_n \leq \theta_0 - \epsilon$, then by nondecreasing property we have $\Psi_n(\hat{\theta}_n) < \epsilon$. Thus
+    \begin{equation}
+        P\left( \Psi_n(\theta_0 - \epsilon) < -\eta \,\cap\, \hat{\theta}_n \leq \theta_0 - \epsilon \right) \leq P\left( \Psi_n(\hat{\theta}_n) < \epsilon \right) \to 0
+    \end{equation}
+    as $n \to \infty$ since $\Psi_n(\hat{\theta}_n) = o_P(1)$. Equivalently, we have
+    \begin{equation}
+        P\left( \Psi_n(\theta_0 - \epsilon) < -\eta \,\cap\, \hat{\theta}_n > \theta_0 - \epsilon \right) \to P\left( \Psi_n(\theta_0 - \epsilon) < -\eta \right)
+    \end{equation}
+    now, since $\eta$ is arbitrary, we can simply set $\eta = -\Psi(\theta_0 - \epsilon) / 2$. Since $\Psi_n(\theta_0 - \epsilon) \to \Psi(\theta_0 - \epsilon) < 0$, we have the RHS above converges to 1 and LHS to $P( \hat{\theta}_n > \theta_0 - \epsilon)$. Repeating this for the other direction, i.e. the case when $\Psi_n(\theta_0 + \epsilon) > \eta$ and $\hat{\theta}_n \geq \theta_0 + \epsilon$, we can show that
+    \begin{equation}
+        P\left( \theta_0 + \epsilon > \hat{\theta}_n  > \theta_0 - \epsilon \right) \to 0
+    \end{equation}
+    which implies $\hat{\theta}_n \overset{P}{\rightarrow} \theta_0$.
+\end{proof}
 \newpage
 % ------------------------------------------------------------------------------
 % Chapter 6
