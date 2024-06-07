@@ -416,6 +416,34 @@ The proof is trivial and can be done by following the same steps as in Theorem \
     \end{equation}
     which implies $\hat{\theta}_n \overset{P}{\rightarrow} \theta_0$.
 \end{proof}
+
+\subsection{Asymptotic Normality}
+Once we have established the conditions for the consistency of M- and Z-estimators, we are interested in their rate of convergence and the limiting distribution of $\sqrt{n}(\hat{\theta}_n - \theta)$. In the VDV textbook, the proof of asymptotic normality crucially depends on a property of the Taylor series on the estimating equations $\Psi_n(\theta)$. We first supply the missing proof for this property.
+\begin{lemma}[Taylor's Theorem for Remainders]
+    Let $f$ be a function defined on $[a, b]$ and $f$ is twice differentiable on $(a, b)$. Then for any $x \in (a, b)$, there exists a point $c \in (a, x)$ such that
+    \begin{equation}
+        f(x) = f(a) + f'(a)(x - a) + \frac{1}{2}f''(c)(x - a)^2
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    This is a generalization of the explicit formula for the remainder in the Taylor series expansion\footnote{For the general case, you can refer to the proof provided in the following link: \url{https://courses.lumenlearning.com/calculus2/chapter/taylors-theorem-with-remainder/}}.
+
+    We define the first-order approximation $P_1(x) = f(a) + f'(a)(x - a)$, and let $R(x) = f(x) - P_1(x)$ be the remainder. For each $x \in (a, b)$, we define another function $g$ as
+    \begin{equation}
+        g(t) = f(x) - f(t) - f'(t)(x - t) - R(x)\frac{(x-t)^2}{(x-a)^2}
+    \end{equation}
+    the first observation (proof ommitted) is that $g(x) = g(a) = 0$. Since $g$ is obviously continuous (as a polynomial), the \textbf{Intermediate Value Theorem} tells us that there exists a point $c \in (a, x)$ such that $g'(c) = 0$. We can inspect into $g'$
+    \begin{align}
+        g'(t) &= -f'(t) - f''(t)(x - t) + f'(t) - 2R(x)\frac{(x-t)}{(x-a)^2} \\
+        &= -f''(t)(x - t) - 2R(x)\frac{(x-t)}{(x-a)^2}
+    \end{align}
+    plugging in $c$ gives
+    \begin{align}
+        0 &= -f''(c)(x - c) - 2R(x)\frac{(x-c)}{(x-a)^2} \\
+        R(x) &= -\frac{1}{2}f''(c)(x - a)^2
+    \end{align}
+    which gives the desired result since $f(x) = P_1(x) + R(x)$.
+\end{proof}
 \newpage
 % ------------------------------------------------------------------------------
 % Chapter 6
