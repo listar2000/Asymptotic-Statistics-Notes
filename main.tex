@@ -419,7 +419,7 @@ The proof is trivial and can be done by following the same steps as in Theorem \
 
 \subsection{Asymptotic Normality}
 Once we have established the conditions for the consistency of M- and Z-estimators, we are interested in their rate of convergence and the limiting distribution of $\sqrt{n}(\hat{\theta}_n - \theta)$. In the VDV textbook, the proof of asymptotic normality crucially depends on a property of the Taylor series on the estimating equations $\Psi_n(\theta)$. We first supply the missing proof for this property.
-\begin{lemma}[Taylor's Theorem for Remainders]
+\begin{lemma}[Taylor's Theorem for Remainders]\label{lemma:taylor_remainder}
     Let $f$ be a function defined on $[a, b]$ and $f$ is twice differentiable on $(a, b)$. Then for any $x \in (a, b)$, there exists a point $c \in (a, x)$ such that
     \begin{equation}
         f(x) = f(a) + f'(a)(x - a) + \frac{1}{2}f''(c)(x - a)^2
@@ -444,6 +444,35 @@ Once we have established the conditions for the consistency of M- and Z-estimato
     \end{align}
     which gives the desired result since $f(x) = P_1(x) + R(x)$.
 \end{proof}
+Now we are ready to show an asymptotic normality result with estimating equations. Let $X_1, ..., X_n \overset{i.i.d}{\sim} P$ and 
+\begin{equation}
+    \Psi_n(\theta) = \sum_{i=1}^{n} \psi_\theta(X_i) = \mathbb{P} \psi_\theta \quad \text{and} \quad \Psi(\theta) = P \psi_\theta
+\end{equation}
+denote $\hat \theta_n$ as the Z-estimator (zero of the estimating equations) and $\theta_0$ zero of $\Psi(\theta)$. 
+We further assume that the mapping $\theta \mapsto \Psi_n(\theta)$ is twice differentiable. Then by Lemma \ref{lemma:taylor_remainder}, we have
+\begin{equation}
+    \mathbf{0} = \Psi_n(\hat \theta_n) = \Psi_n(\theta_0) + \dot{\Psi}_n(\theta_0)(\hat \theta_n - \theta_0) + \frac{1}{2}(\hat \theta_n - \theta_0)'\ddot{\Psi}_n(\Tilde{\theta}_n)(\hat \theta_n - \theta_0)
+\end{equation}
+where we consider the multivariate case ($\Psi_n: \mathbb{R}^k \to \mathbb{R}^k$). Then we have
+\begin{equation}
+    \sqrt{n}(\hat \theta_n - \theta_0) = -\left[ \dot{\Psi}_n(\theta_0) + \frac{1}{2}(\hat \theta_n - \theta_0)' \ddot{\Psi}_n(\Tilde{\theta}_n)\right]^{-1} 
+    \sqrt{n}\Psi_n(\theta_0)
+\end{equation}
+\begin{theorem}[Z-estimator AN I] 
+    If $\theta \mapsto \Psi_n(\theta)$ is twice differentiable and $P \psi_{\theta_0}^2 < \infty$. Under suitable conditions that make 
+    $\ddot{\Psi}_n(\Tilde{\theta}_n) = O_p(1)$ (bounded in probability) and $\dot{\Psi}_n(\theta_0)$ be invertible, we have
+    \begin{equation}
+        \sqrt{n}(\hat \theta_n - \theta_0) \overset{d}{\rightarrow} \mathcal{N}\left(0, 
+        (\dot{\Psi}_n(\theta_0))^{-1}P\psi_{\theta_0}\psi_{\theta_0}'(\dot{\Psi}_n(\theta_0))^{-1}\right)
+    \end{equation}
+\end{theorem}
+The textbook also offers another asymptotic normality result with less stringent conditions. The result is about the same.
+\begin{theorem}[Z-estimator AN II]
+    \hfill \newline
+    Please refer to \textbf{Theorem 5.21 (p.52-53)} in VDV textbook.
+\end{theorem}
+The last part of its proof is a bit vague in the original textbook. I have written a more detailed proof in \href{https://math.stackexchange.com/a/4929317}{here}.
+
 \newpage
 % ------------------------------------------------------------------------------
 % Chapter 6
